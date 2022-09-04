@@ -1,0 +1,65 @@
+We use 2 ISPs for later load balancing,
+
+
+/ ip address
+add address = 192.168.0.1 / 24 disabled = no interface = WAN1 network = 192.168.0.0
+add address = 192.168.1.2 / 24 disabled = no interface = WAN2 network = 192.168.1.0
+add address = 192.168.2.2 / 24 disabled = no interface = LAN network = 192.168.2.0
+
+First, we make marking for load balancer.
+
+
+/ ip firewall mangle
+add action = mark-connection chain = input disabled = no in-interface = WAN1 new-connection-mark = WAN1_connmark passthrough = yes
+add action = mark-connection chain = input disabled = no in-interface = WAN2 new-connection-mark = WAN2_connmark passthrough = yes
+add action = mark-routing chain = output connection-mark = WAN1_connmark disabled = no new-routing-mark = ke_ISP1 passthrough = yes
+add action = mark-routing chain = output connection-mark = WAN2_connmark disabled = no new-routing-mark = ke_ISP2 passthrough = yes
+add action = mark-connection chain = prerouting disabled = no dst-address-type =! LAN in-interface = LAN new-connection-mark = WAN1_connmark passthrough = yes per-connection-classifier = both-addresses-and-ports: 2 / 0
+add action = mark-connection chain = prerouting disabled = no dst-address-type =! LAN in-interface = LAN new-connection-mark = WAN2_connmark passthrough = yes per-connection-classifier = both-addresses-and-ports: 2 / 1
+add action = mark-routing chain = prerouting connection-mark = WAN1_connmark disabled = no in-interface = LAN new-routing-mark = ke_ISP1 passthrough = yes
+add action = mark-routing chain = prerouting connection-mark = WAN2_connmark disabled = no in-interface = LAN new-routing-mark = ke_ISP2 passthrough = yes
+
+Setting masquerade for both ISP links
+
+/ ip firewall nat
+add action = masquerade chain = srcnat disabled = no out-interface = WAN1
+add action = masquerade chain = srcnat disabled = no out-interface = WAN2
+
+
+Setting Route to implement FailOver 2 ISP Load Balancing PCC Without Netwatch.
+
+His weapon in this session. 
+
+## Setting static routes of each host to each of your ISP gateways:
+
+/ ip route
+add dst-address = 8.8.8.8 gateway = 192.168.0.1 scope = 10
+add dst-address = 8.8.4.4 gateway = 192.168.1.1 scope = 10
+
+## Setting static routes to each host from your load balancing mikrotik routing mark:
+
+
+/ ip route
+add distance = 1 gateway = 8.8.8.8 routing-mark = ke_ISP1 check-gateway = ping
+add distance = 2 gateway = 8.8.4.4 routing-mark = ke_ISP2 check-gateway = ping
+
+## Setting IP hop "virtual / boong2an" which we will use for the next routing setting:
+
+/ ip route
+add dst-address = 10.20.30.1 gateway = 8.8.8.8 scope = 10 target-scope = 10 check-gateway = ping
+add dst-address = 10.20.30.2 gateway = 8.8.4.4 scope = 10 target-scope = 10 check-gateway = ping
+
+## Add a default route for both your ISPs that are already marked in mangle:
+
+
+/ ip route
+add distance = 1 gateway = 10.20.30.1 routing-mark = ke_ISP1
+add distance = 2 gateway = 10.20.30.2 routing-mark = ke_ISP2
+
+## Add the default route for your mikrotik:
+
+/ ip route
+add distance = 1 gateway = 10.20.30.1
+add distance = 2 gateway = 10.20.30.2
+
+Thanks to

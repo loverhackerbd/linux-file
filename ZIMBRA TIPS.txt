@@ -1,0 +1,72 @@
+yum update -y ; reboot
+yum install unzip net-tools sysstat openssh-clients perl-core libaio nmap-ncat libstdc++.so.6 wget -y
+systemctl stop postfix
+systemctl disable postfix
+yum remove postfix
+
+
+dig -t A example.com
+dig -t MX example.com
+
+wget https://files.zimbra.com/downloads/8.8.10_GA/zcs-8.8.10_GA_3039.RHEL7_64.20180928094617.tgz --no-check-certificate
+tar zxpvf zcs-8.8.10_GA_3039.RHEL7_64.20180928094617.tgz
+
+
+
+
+***To list all mail accounts
+zmprov -l gaa
+
+***Use the following command to create a new user in zimbra. Here the user mail id, the password and the display name are entered.
+zmprov ca test1@smtech.com test123 displayName test1
+
+***You can set the password for a Zimbra user with the help of the following command.
+zmprov sp test1@testdomain.com test@123
+
+***You can rename a Zimbra user by invoking the following command.
+zmprov ra test1@testdomain.com  test2@testdomain.com
+
+***If you want to remove a user account from Zimbra, run the following command.
+ zmprov  da test1@testdomain.com  test2@testdomain.com
+
+***To check all the accounts and its information
+ zmaccts
+
+****To check the version
+zmcontrol -v
+
+
+
+Question 5. How To Start Only Mta Services Of Zimbra If It's Not Running ?
+
+Answer :
+
+zmprov -l ms mail.example.com +zimbraServiceEnabled mta
+
+
+Question 16. How To Made Mirror Server For Live Data Sync ?
+
+Answer :
+
+Exactly the same version of Zimbra must be installed on both the live and mirror server. 
+To start with we work on the live server. There is no need to stop Zimbra for most of the install.
+ Only a short amount of down-time will need to be scheduled later to perform a final rsync operation between the two servers.
+
+Go As user root....
+
+# apt-get install inotify-tools on both server Main and Mirror server.
+
+service zimbra stop on Mirror server.
+
+# rsync -aHz --force --delete live_server:/opt/zimbra/ /opt/zimbra/
+
+# service zimbra start
+
+service zimbra start
+
+service zimbra status
+
+
+https://www.linuxhelp.com/questions/how-to-restore-a-single-user-account-backup-in-zimbra
+
+https://www.linuxhelp.com/questions/how-to-take-backup-of-the-zimbra-mail-id

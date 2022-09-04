@@ -1,0 +1,99 @@
+https://www.tecmint.com/rsync-local-remote-file-synchronization-commands/
+https://superuser.com/questions/555799/how-to-setup-rsync-without-password-with-ssh-on-unix-linux
+
+Local to Local:  rsync [OPTION]... [SRC]... DEST
+Local to Remote: rsync [OPTION]... [SRC]... [USER@]HOST:DEST
+Remote to Local: rsync [OPTION]... [USER@]HOST:SRC... [DEST]
+
+-v : verbose
+-r : copies data recursively (but don’t preserve timestamps and permission while transferring data.
+-a : archive mode, which allows copying files recursively and it also preserves symbolic links, file permissions, user & group ownerships, and timestamps.
+-z : compress file data.
+-h : human-readable, output numbers in a human-readable format.
+
+Here in this example, We will be using the “ssh” with the “-e” option and perform data transfer.
+rsync -avzhe ssh root@192.168.0.141:/root/anaconda-ks.cfg /tmp
+
+Automatically Delete source Files After Successful Transfer
+rsync --remove-source-files -zvh backup.tar.gz root@192.168.0.151:/tmp/backups/
+
+
+
+    mkdir dir1
+    mkdir dir2
+    touch dir1/file{1..100}
+    rsync -r dir1/ dir2
+
+rsync -zavh /home/ubuntu/aaa /opt/backup
+
+
+how to take whole ubuntu 16.04 system backup into external hard disk
+sudo lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT,LABEL
+sudo dd if=/dev/sda of=/dev/sdb status=progress
+
+ssh: connect to host 192.168.1.19 port 22: No route to host
+
+
+sudo scp -r /path2yourFolder/ username@server_Ip:/home/username
+scp -r /root/move/* ubuntu@192.168.1.19:/home/ubuntu
+rsync -avz aaa.txt ubuntu@192.168.1.20:/home/ubuntu/test   ==ok
+*/10 * * * * rsync -zavh /home/a /opt/backup
+
+
+
+
+
+
+crontab -r       ====Remove everything from crontab:
+/var/spool/cron/crontabs    ====location crontab
+*/2 * * * *  tar -zcf /root/backups/home.tgz /home/    ====everyday at  5am home folder backup
+
+chmod +x abc.sh
+service cron reload
+select-editor    ===$ crontab -e     no crontab for root - using an empty one     888
+
+crontab -e
+*/2 * * * * /bin/sh /root/aa.sh               === backup 2 min
+touch aa.sh
+chmod u+x aa.sh
+vi aa.sh
+tar -zcvpf /home/ubuntu/home.tar.gz /home     ===ok
+tar -zcvpf /media/USB/home.tar.gz /home
+
+
+Ctrl+X, Y, Enter should get you out of crontab (if using nano)
+
+
+/var/spool/cron/crontabs    ######crontab location
+
+
+
+
+
+
+tar -zcvpf /root/move/home.tar.gz /home
+rsync -avz -e ssh --delete /root/a/ ubuntu@192.168.1.6:/home/ubuntu/backup
+
+tar -zcvpf /root/newsusers.bak/home_$(date +%F).tar.gz /etc/passwd /etc/shadow /etc/group /etc/gshadow
+
+0 1 * * * tar -zcvpf /root/newsusers.bak/home_$(date +%F).tar.gz /home /etc/passwd /etc/shadow /etc/group /etc/gshadow
+
+*/5 * * * *
+
+
+
+rsync -avz -e ssh --delete /root/backup/ ubuntu@192.168.1.4:/home/ubuntu/backup     *****local to remote by ssh
+rsync -avz abc/ ubuntu@118.179.199.126:/home/ubuntu/backup       ****local to remote sync
+rsync -avz ubuntu@118.179.199.126:/home/ubuntu/backup/etc abc/   *****Remote to local
+
+
+
+
+
+
+local machine work
+ssh-keygen   (hit 3 times enter no password given)
+ssh-copy-id -i ~/.ssh/id_rsa.pub qel@119.179.199.126
+
+rsync -zarvh -e ssh b/ qel@118.179.199.126:/home/qel/remot  (data throw local pc to remote pc transfer)
+rsync -zarvh -e ssh qel@118.179.199.126:/home/qel/remot /root/a   ( get data from remote pc to local pc )

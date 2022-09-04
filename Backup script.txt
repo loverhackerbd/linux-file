@@ -1,0 +1,4 @@
+#!/bin/sh
+service zimbra stop
+cp -rp /opt/zimbra /backup/back_$(date +%d-%m-%Y)
+service zimbra start

@@ -1,0 +1,11 @@
+
+
+*listing port 
+sudo netstat -ntlp | grep LISTEN
+
+*server running time
+uptime
+last reboot
+
+*permission
+sudo chmod -R 777 /var/www   ==full permission

@@ -1,0 +1,42 @@
+*nwtwork
+sudo nano /etc/network/interfaces
+sudo /etc/init.d/networking restart
+
+# The primary network interface
+auto eno1
+iface eno1 inet static
+        address 118.179.199.124
+        netmask 255.255.255.248
+        network 118.179.199.120
+        broadcast 118.179.199.127
+        gateway 118.179.199.121
+        # dns-* options are implemented by the resolvconf package, if installed
+        dns-nameservers 118.179.223.10 202.4.96.6 8.8.8.8
+        dns-search qel-groupqa.com
+~
+
+network:
+    ethernets:
+        enp0s3:
+            dhcp4: false
+            addresses: [192.168.1.202/24]
+            gateway4: 192.168.1.1
+            nameservers:
+              addresses: [8.8.8.8,8.8.4.4,192.168.1.1]
+    version: 2
+
+
+sudo nano /etc/network/interfaces
+
+iface <interface> inet static
+	address 192.168.0.100
+	netmask 255.255.255.0
+	gateway 192.168.0.1
+dns-nameservers 8.8.8.8 8.8.4.4
+sudo /etc/init.d/networking restart
+
+sudo apt-get update
+sudo apt-get install apache2
+sudo systemctl status apache2
+
+

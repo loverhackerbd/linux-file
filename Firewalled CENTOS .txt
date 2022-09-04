@@ -1,0 +1,26 @@
+sudo touch /etc/hosts.{allow,deny}
+vi /etc/hosts.deny
+sshd: ALL
+
+vi /etc/hosts.allow
+sshd: 172.168.0.21
+sshd: 172.168.0.21, 10.83.33.77, 10.63.152.9, 10.12.100.11, 10.82.192.28
+sshd : localhost
+sshd : 192.168.0.   (172.168.0.0/24)
+sshd : 99.151.250.7
+
+
+
+firewall-cmd --get-zones
+firewall-cmd --get-default-zone
+firewall-cmd --list-all-zones
+sudo firewall-cmd --get-active-zones
+sudo firewall-cmd --info-zone public
+sudo firewall-cmd --zone=public --permanent --add-port=80/tcp --add-port=443/tcp
+sudo firewall-cmd --reload
+sudo firewall-cmd --info-zone public
+sudo firewall-cmd --zone=public --permanent --remove-port=80/tcp --remove-port=443/tcp
+sudo firewall-cmd --zone=public --permanent --add-service=http 
+sudo firewall-cmd --reload 
+sudo firewall-cmd --zone=public --permanent --remove-service=http 
+sudo firewall-cmd --reload 

@@ -1,0 +1,6 @@
+sudo apt-get install mailutils       ///should be install
+mail ubuntu@example.com or mail -s 'subject' receipentmail then enter
+
+echo 'Test mail from postfix' | mail -s 'Plz ignore' selim.mia@qel-groupqa.com
+...
+ctl+d  //end the mail

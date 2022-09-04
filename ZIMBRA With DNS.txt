@@ -1,0 +1,184 @@
+How to install and configure Zimbra Mail Server on centos 8.
+
+# yum update
+setup
+# yum install -y bind* 
+
+#nmtui ns1
+#hostnamectl set-hostname ns1
+#vim /etc/hosts
+echo "192.168.1.8 mail.smtechno.xyz  mail " >> /etc/hosts
+192.168.1.185 ns1.smtech.com ns1
+cat /etc/hosts
+--------------------------------------------------------------------------
+#vim /etc/named.conf
+options {
+        listen-on port 53 { 127.0.0.1; 192.168.1.185; };
+        allow-query     { any; };
+--------------------------------------------------------------------------
+# vim /etc/named.rfc1912.zones
+zone "smtech.com" IN {
+        type master;
+        file "smtech.fz";
+        allow-update { none; };
+};
+zone "1.168.192.in-addr.arpa" IN {
+        type master;
+        file "smtech.rz";
+        allow-update { none; };
+};
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+vim /var/named/smtechno.fz
+
+@   IN  SOA     ns1.smtechno.xyz. root.smtechno.xyz. (
+                                                1001    ;Serial
+                                                3H      ;Refresh
+                                                15M     ;Retry
+                                                1W      ;Expire
+                                                1D      ;Minimum TTL
+                                                )
+
+;Name ns1 Information
+@      IN  NS      ns1.smtechno.zyx.
+
+;IP address of Name ns1
+ns1 IN  A       118.179.199.126
+
+;Mail exchanger
+smtechno.xyz. IN  MX 10   mail.smtechno.xyz.
+
+;A - Record HostName To IP Address
+www     IN  A       118.179.199.126
+mail    IN  A       1118.179.199.126
+ 
+
+
+vim /var/named/smtechno.rz
+@   IN  SOA     ns1.smtechno.xyz. root.smtechno.xyz. (
+                                                1001    ;Serial
+                                                3H      ;Refresh
+                                                15M     ;Retry
+                                                1W      ;Expire
+                                                1D      ;Minimum TTL
+                                                )
+
+;Name ns1 Information
+@ IN  NS       ns1.smtechno.xyz.
+
+;Reverse lookup for Name ns1
+126        IN  PTR      ns1.smtechno.xyz.
+
+;PTR Record IP address to HostName
+126      IN  PTR     www.smtechno.xyz.
+126      IN  PTR     mail.smtechno.xyz.
+---------------------------------------------------------------------------------------------------------------------
+# service named restart
+# systemctl restart named.service
+# systemctl enable named.service
+
+
+Check Conf file
+# named-checkconf /etc/named.conf
+
+Check Zone file
+# named-checkzone smtechno.fz /var/named/smtechno.fz
+# named-checkzone smtechno.rz /var/named/smtechno.rz
+
+Change permission of Conf file
+# cd /var/named
+# ls -l
+# chgrp named smtechno.fz
+# chgrp named smtechno.rz
+
+
+host -t mx smtechno.xyz
+
+vim /etc/resolv.conf
+name server: 118.179.199.126
+name server: 8.8.8.8
+
+#depandency install
+yum install unzip net-tools sysstat openssh-clients perl-core libaio nmap-ncat libstdc++.so.6 wget -y
+
+
+# cd /opt
+######################
+Centos 7
+wget https://files.zimbra.com/downloads/8.8.10_GA/zcs-8.8.10_GA_3039.RHEL7_64.20180928094617.tgz --no-check-certificate
+tar zxpvf zcs-8.8.10_GA_3039.RHEL7_64.20180928094617.tgz
+cd 
+##############################
+
+CENTOS 8
+
+# wget https://files.zimbra.com/downloads/8.8.15_BETA/zcs-8.8.15_BETA_3946.RHEL8_64.20200521060840.tgz
+# ls
+# tar xzvfs zcs-8.8.15_BETA_3946.RHEL8_64.20200521060840.tgz
+
+# mv zcs-8.8.15_BETA_3946.RHEL8_64.20200521060840 zimbra
+# cd Zimbra/
+#ls
+# ./install.sh
+
+License Agreement				Yes
+
+
+Zimbra's Package repository			Yes
+
+
+Would you like to delete before installing	No
+
+Install Zimbra Ldap				Yes
+
+logger mta dnscache snmp store 
+apache spell memcached proxy drive		Yes
+
+Install zimbra imapd				No
+
+
+Zimbra Chat					Yes
+
+The system will be modified continue		Yes
+ 
+getenforce
+setenforce 0
+getenforce
+
+
+
+Disable SE Linux# nano /etc/selinux/config
+Disable postfix and send mail 
+# systemctl stop postfix.service
+# systemctl stop postfix.service
+# systemctl disable postfix.service
+# systemctl stop firewalld.service 
+# systemctl disable firewalld.service
+
+sudo systemctl enable firewalld
+sudo systemctl start firewalld
+firewall-cmd --permanent --add-port={25,80,110,143,443,465,587,993,995,5222,5223,9071,7071}/tcp
+firewall-cmd --reload
+
+#service zimbra restart 
+# systemctl enable zimbra
+https://mail.smtechno.xyz:7071/
+
+
+check 
+
+su - zimbra
+zmcontrol status
+zmcontrol restart
+
+
+uninslatll
+
+[root@mail ~]# cd /root/zimbra/zcs-8.8.10_GA_3039.RHEL7_64.20180928094617
+[root@mail zcs-8.8.10_GA_3039.RHEL7_64.20180928094617]# ./install.sh -u
+
+
+
+sudo systemctl status network
+sudo systemctl restart network
+sudo systemctl start network

@@ -1,0 +1,6 @@
+:for x from=10 to=200 do={/queue simple add name="USER-$x" max-limit=5M/512k target="192.168.1.$x"}
+
+
+:for x from=10 to=200 do={/queue simple add name="USER-$x" max-limit=1M/60k target="192.168.1.$x"}
+
+:for x from=10 to=200 do={/queue simple add name="USER-$x" max-limit=5M/1M target="192.168.1.$x"}

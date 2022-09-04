@@ -1,0 +1,18 @@
+ns5.eicra.net
+ns6.eicra.net
+64.188.2.199
+ns3.amberit.com.bd(118.179.223.10),    ns4.amberit.com.bd (202.4.96.6)
+
+
+nameserver 118.179.223.10
+nameserver 202.4.96.6
+nameserver 8.8.8.8
+search qel-groupqa.com
+search smtechno.xyz
+
+
+nslookup -query=mx smtechno.xyz
+nslookup -type=ns smtechno.xyz
+nslookup -query=mx smtechno.xyz
+nslookup -type=any smtechno.xyz
+nslookup smtechno.xyz ns1.smtechno.xyz

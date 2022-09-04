@@ -1,0 +1,15 @@
+
+sudo ufw enable
+sudo ufw disable
+sudo ufw status verbose
+sudo ufw allow 53
+sudo ufw allow 53/tcp
+sudo ufw allow 53/udp
+sudo ufw deny 53/tcp
+sudo ufw delete deny 80/tcp
+sudo ufw allow ssh                          ----to allow ssh by name
+sudo ufw deny ssh
+sudo ufw status
+sudo ufw allow from 207.46.232.182    -----------Allow by Specific IP
+sudo ufw allow from 192.168.1.0/24
+sudo ufw allow from 192.168.0.4 to any port 22                  ----Allow by specific port and IP address

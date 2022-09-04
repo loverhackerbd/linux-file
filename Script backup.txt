@@ -1,0 +1,29 @@
+# vi /opt/user-list.txt
+
+daygeek
+sudha
+u1
+u2
+u3
+u4
+u5
+user1
+user2
+
+# vi /opt/shell-scripts/home-dir-backup-1.sh
+
+#!/bin/bash
+DATE=$(date +%d-%m-%Y)
+BACKUP_DIR="/backup"
+
+#To create a new directory in the backup directory location
+mkdir -p $BACKUP_DIR/$DATE
+
+#To backup user's home directory
+for user in `more /opt/user-list.txt`
+do
+tar -zcvpf $BACKUP_DIR/$DATE/$user-$DATE.tar.gz /home/$user
+done
+
+#To delete files older than 10 days
+find $BACKUP_DIR/* -mtime +10 -exec rm {} \;

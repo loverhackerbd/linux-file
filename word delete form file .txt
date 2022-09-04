@@ -1,0 +1,1 @@
+sed -i 's/,shamim.mamun@qel-groupqa.com/ /g' aliases

@@ -1,0 +1,6 @@
+Using 'sed' to find and replace
+
+sed -i -e 's/few/asd/g' hello.txt
+
+The few, the brave.
+The asd, the brave.

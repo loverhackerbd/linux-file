@@ -1,0 +1,15 @@
+Mailbox backup from CLI Zimbra
+1. Create a directory where you want to take backup:
+
+# chmod 777 /backup
+or:
+
+# chown zimbra.zimbra /backup
+2. Login from zimbra user and run below command to Export/Backup user mailbox:
+
+# su - zimbra
+$ zmmailbox -z -m user@example.com getRestURL "//?fmt=tgz" > /backup/user@example.com.tar.gz
+Restore/Import Zimbra Mailbox backup
+You can restore the Zimbra Mailbox from the backup taken as per above section. To restore a Zimbra Mailbox backup:
+
+$ zmmailbox -z -m user@example.com postRestURL "//?fmt=tgz&resolve=reset" /backup/user@example.com.tar.gz

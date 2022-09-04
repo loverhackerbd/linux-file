@@ -1,0 +1,98 @@
+https://www.youtube.com/watch?v=saBDzlmRkvw
+
+
+
+------ Commands in installing Nextcloud 19 -----------------------
+- Install first a LAMP server.
+
+Step 1. Install the Apache webserver.
+         Command:
+         sudo apt update
+         sudo apt install -y apache2 libapache2-mod-php bzip2
+
+Step 2. Install the necessary PHP modules for Nextcloud installation.
+        Command:
+        sudo apt install -y php-gd php-json php-mysql php-curl php-mbstring php-intl php-imagick php-xml php-zip php-sqlite3
+
+- Enable mod_rewrite for NextCloud work properly.
+        Command:
+        sudo a2enmod rewrite
+
+- also, you need to enable a few additional Apache modules.
+       Command:
+       sudo a2enmod headers
+       sudo a2enmod dir
+       sudo a2enmod env
+       sudo a2enmod mime
+
+- Restart the Apache service.
+      Command:
+      sudo systemctl restart apache2
+     
+Step 3. Finally, Install the MariaDB server (v10.3) from the Ubuntu repository.
+
+      sudo apt install -y mariadb-server mariadb-client
+      
+- Securing mariaDB with mysql_secure_installation command
+      Command:
+      systemctl start mariadb mysql_secure_installation
+    
+- Let us Create Database
+
+- Log in to the MariaDB server using the root user to create a database.
+      Command:
+      sudo mysql -u root -p
+
+ - Create a database called nextcloud_db.
+      Command:
+      create database nextcloud_db;
+   
+ - Create a database user nextcloud_user and nextcloud password.
+      Command:
+      create user nextcloud_user@localhost identified by 'nextcloud_pass';
+
+ - Grant this user all privileges on the nextcloud database.
+      Command:
+      grant all privileges on nextcloud_db.* to nextcloud_user@localhost identified by 'nextcloud_pass';  
+
+- Flush privileges and exit.
+      Command:
+      flush privileges;
+      exit;
+
+- We are done installing LAMP Server. Let's download and install Nextcloud 19.
+
+- Go to Nextcloud official website to get the latest Server installer
+       Link: https://nextcloud.com/
+     
+- Download it in your server using wget command
+       Command:
+       wget https://download.nextcloud.com/server/releases/nextcloud-19.0.1.zip
+     
+Once downloaded, extract the archive with unzip.
+ - install unzip on your system:
+       Command: 
+       sudo apt install unzip
+
+- unzip nextcloud on directory var/www/html
+       Command:
+       sudo unzip nextcloud-19.0.1.zip -d /var/www/html
+
+- change the owner of this directory
+       Command:  
+        sudo chown www-data:www-data /var/www/html/nextcloud/ -R
+   
+ - Give access permision to the nextcloud files
+        Command:
+        sudo chmod 775 -R /var/www/html/nextcloud
+
+Now, open your browser using your server IP address
+        Command:  
+        http://192.168.1.50/nextcloud
+
+- Then create login to your new nextcloud server and connect to database using the credentials you created earlier.
+                                                                    - End -
+
+Please watch our more upcoming videos and don't forget to LIKE,  COMMENT, AND SUBSCRIBE.
+Thank you all.
+

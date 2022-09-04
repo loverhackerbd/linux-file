@@ -1,0 +1,48 @@
+First create a tar ball of old uses (old Linux system). Create a directory:
+# mkdir /root/move/
+
+Setup UID filter limit:
+# export UGIDLIMIT=1000
+
+Now copy /etc/passwd accounts to /root/move/passwd.mig using awk to filter out system account (i.e. only copy user accounts)
+# awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=29999)' /etc/passwd > /root/move/passwd.mig
+
+Copy /etc/group file:
+# awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=29999)' /etc/group > /root/move/group.mig
+
+Copy /etc/shadow file:
+# awk -v LIMIT=$UGIDLIMIT -F: '($3>=LIMIT) && ($3!=29999) {print $1}' /etc/passwd | tee - |egrep -f - /etc/shadow > /root/move/shadow.mig
+
+Copy /etc/gshadow (rarely used):
+# cp /etc/gshadow /root/move/gshadow.mig
+
+Make a backup of /home and /var/spool/mail dirs:
+# tar -zcvpf /root/move/home.tar.gz /home
+# tar -zcvpf /root/move/mail.tar.gz /var/spool/mail
+
+
+
+Commands to type on new Linux system
+First, make a backup of current users and passwords:
+# mkdir /root/newsusers.bak
+# cp /etc/passwd /etc/shadow /etc/group /etc/gshadow /root/newsusers.bak
+
+Now restore passwd and other files in /etc/
+# cd /path/to/location
+# cat passwd.mig >> /etc/passwd
+# cat group.mig >> /etc/group
+# cat shadow.mig >> /etc/shadow
+# /bin/cp gshadow.mig /etc/gshadow
+
+Please note that you must use >> (append) and not > (create) shell redirection.
+
+Now copy and extract home.tar.gz to new server /home
+# cd /
+# tar -zxvf /path/to/location/home.tar.gz
+
+Now copy and extract mail.tar.gz (Mails) to new server /var/spool/mail
+# cd /
+# tar -zxvf /path/to/location/mail.tar.gz
+
+Now reboot system; when the Linux comes back, your user accounts will work as they did before on old system:
+# reboot

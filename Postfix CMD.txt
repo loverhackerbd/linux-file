@@ -1,0 +1,64 @@
+ apt -y install postfix sasl2-bin
+root@mail:~# cp /usr/share/postfix/main.cf.dist /etc/postfix/main.cf
+root@mail:~# vi /etc/postfix/main.cf
+# line 78: uncomment
+mail_owner = postfix
+# line 94: uncomment and specify hostname
+myhostname = mail.qel-groupqa.com
+# line 102: uncomment and specify domainname
+mydomain = qel-groupqa.com
+# line 123: uncomment
+myorigin = $mydomain
+# line 137: uncomment
+inet_interfaces = all
+# line 185: uncomment
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+# line 228: uncomment
+local_recipient_maps = unix:passwd.byname $alias_maps
+# line 270: uncomment
+mynetworks_style = subnet
+# line 287: add your local network
+mynetworks = 127.0.0.0/8, 192.168.1.0/24
+# line 407: uncomment
+alias_maps = hash:/etc/aliases
+# line 418: uncomment
+alias_database = hash:/etc/aliases
+# line 440: uncomment
+home_mailbox = Maildir/
+# line 576: comment out and add
+#smtpd_banner = $myhostname ESMTP $mail_name (Ubuntu)
+smtpd_banner = $myhostname ESMTP
+# line 650: add
+sendmail_path = /usr/sbin/postfix
+# line 655: add
+newaliases_path = /usr/bin/newaliases
+# line 660: add
+mailq_path = /usr/bin/mailq
+# line 666: add
+setgid_group = postdrop
+# line 670: comment out
+#html_directory =
+# line 674: comment out
+#manpage_directory =
+# line 679: comment out
+#sample_directory =
+# line 683: comment out
+#readme_directory =
+# line 684: if also listen IPv6, change to [all]
+inet_protocols = ipv4
+# add to the end
+# for example, limit an email size to 10M
+message_size_limit = 10485760
+# for example, limit mailbox size to 1G
+mailbox_size_limit = 1073741824
+
+# SMTP-Auth settings
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_local_domain = $myhostname
+smtpd_recipient_restrictions = permit_mynetworks, permit_auth_destination, permit_sasl_authenticated, reject 
+
+root@mail:~# newaliases
+root@mail:~# systemctl restart postfix

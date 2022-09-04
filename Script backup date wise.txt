@@ -1,0 +1,16 @@
+nano /opt/scripts/home-dir-backup.sh
+
+#!/bin/bash
+DATE=$(date +%d-%m-%Y)
+BACKUP_DIR="/backup"
+
+# To backup akash's home directory
+tar -zcvpf $BACKUP_DIR/akash-$DATE.tar.gz /home/akash
+
+# To delete files older than 15 days
+find $BACKUP_DIR/* -mtime +15 -exec rm {} \;
+
+
+chmod +x home-dir-backup.sh
+
+0 12 * * 5 /opt/scripts/home-dir-backup.sh

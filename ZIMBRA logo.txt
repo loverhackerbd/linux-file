@@ -1,0 +1,34 @@
+How to change logo in zimbra mail server : Script
+####################################
+# mkdir /opt/zimbra/jetty/webapps/zimbra/logos/
+# chown zimbra:zimbra /opt/zimbra/jetty/webapps/zimbra/logos/MyLoginBanner.png 
+# chown zimbra:zimbra /opt/zimbra/jetty/webapps/zimbra/logos/MyAppBanner.png
+
+$ zmprov md smtech.xyz zimbraSkinLogoURL https://mail.smtech.xyz
+$ zmprov md smtech.xyz zimbraSkinLogoLoginBanner /logos/MyLoginBanner.png
+$ zmprov md smtech.xyz zimbraSkinLogoAppBanner /logos/MyAppBanner.png
+
+$ zmcontrol restart
+################################################
+
+
+
+Logo Ratio and Size:
+
+Login Banner: 400 x 60 pixel (File Format PNG)
+Application Banner: 170 x 30 Pixel (File Format PNG)
+
+# mkdir /opt/zimbra/jetty/webapps/zimbra/logos/
+# chown zimbra:zimbra /opt/zimbra/jetty/webapps/zimbra/logos/MyLoginBanner.png
+# chown zimbra:zimbra /opt/zimbra/jetty/webapps/zimbra/logos/MyAppBanner.png
+# su zimbra
+# zmprov md smtech.xyz zimbraSkinLogoURL https://smtech.xyz  
+# zmprov md smtech.xyz zimbraSkinLogoLoginBanner /logos/MyLoginBanner.png
+# zmprov md smtech.xyz zimbraSkinLogoAppBanner /logos/MyAppBanner.png
+# zmcontrol restart
+
+
+zmprov md smtech.xyz zimbraSkinLogoURL https://smtech.xyz  
+# zmprov md smtech.xyz zimbraSkinLogoLoginBanner /logos/MyLoginBanner.png
+# zmprov md smtech.xyz zimbraSkinLogoAppBanner /logos/MyAppBanner.png
+# zmcontrol restart

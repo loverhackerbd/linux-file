@@ -1,0 +1,18 @@
+$ last
+
+# To check the last ten login attempts, you can pipe it with "head"
+
+$ last | head -n 10 Login
+
+$ last -w
+
+$ last --fullnames
+last --since -2days
+last --until -5days
+sudo lastb
+
+tail -f -n 100 /var/log/auth.log | grep -i failed
+tail -f -n 100 /var/log/auth.log | grep -i sshd
+sudo journalctl -r -u ssh | grep -i failed
+
+lastlog

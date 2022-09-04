@@ -1,0 +1,55 @@
+grep 'DEFAULT_' /etc/default/ufw
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw enable
+sudo ufw status
+sudo ufw status numbered
+sudo ufw delete 4
+sudo ufw allow ssh
+sudo ufw allow from 192.168.1.143
+sudo ufw allow proto tcp from any to 10.8.0.1 port 22
+ufw allow 53 comment 'open tcp and udp port 53 for dns'
+sudo ufw allow proto tcp from any to any port 80,443 comment 'my cool web app ports'
+sudo ufw allow smtp
+sudo ufw allow 25
+sudo ufw allow 143
+sudo ufw allow 993
+sudo ufw allow 110
+sudo ufw allow 995
+sudo ufw reset
+sudo ufw reload
+sudo nano /etc/ufw/before.rules
+sudo vi /etc/ufw/before.rules
+sudo more /var/log/ufw.log
+sudo tail -f /var/log/ufw.log
+
+sudo -u www-data php /var/www/nextcloud/occ user:resetpassword root
+
+sudo ufw allow from 118.179.199.122 to any port 22 proto tcp
+sudo ufw allow proto tcp from 10.8.0.2 to 10.8.0.1 port 22
+sudo ufw status numbered
+
+
+
+
+grep 'DEFAULT_' /etc/default/ufw
+sudo ufw default allow outgoing
+sudo ufw default deny incoming
+sudo ufw enable
+sudo ufw allow ssh
+sudo ufw allow proto tcp from any to 10.8.0.1 port 22
+sudo ufw allow proto tcp from 10.8.0.2 to 10.8.0.1 port 22
+ufw allow 53 comment 'open tcp and udp port 53 for dns'
+sudo ufw allow proto tcp from any to any port 80,443 comment 'my cool web app ports'
+sudo ufw allow 25
+sudo ufw allow smtp
+sudo ufw allow 143
+sudo ufw allow 993
+sudo ufw allow 110
+sudo ufw allow 995
+sudo ufw reset
+sudo ufw reload
+sudo nano /etc/ufw/before.rules
+sudo vi /etc/ufw/before.rules
+sudo more /var/log/ufw.log
+sudo tail -f /var/log/ufw.log

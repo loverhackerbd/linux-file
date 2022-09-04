@@ -1,0 +1,13 @@
+ip pool add name=PPTP-Pool ranges=192.168.100.10-192.168.100.20
+ppp profile add change-tcp-mss=yes local-address=PPTP-Pool name=PPTP-Profile only-one=yes remote-address=PPTP-Pool use-encryption=yes dns-server=118.179.223.10,8.8.4.4
+ppp secret add name=quazi password=Quazi@2021! profile=PPTP-Profile
+interface pptp-server server set authentication=chap,mschap1,mschap2 default-profile=PPTP-Profile enabled=yes
+ip firewall filter add chain=input comment="PPTP VPN" dst-port=1723 protocol=tcp
+
+Internet stopped working when connected to VPN
+
+
+119.18.150.1
+118.179.223.10
+
+202.5.47.181

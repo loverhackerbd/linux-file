@@ -1,0 +1,5 @@
+Error 13 indicates a filesystem permissions problem
+SMTP Error (451): Failed to add recipient "a@example.com" (4.3.0 <a@example.com>: Temporary lookup failure).
+smtp error (-1) connection to server failed. roundcube
+
+10 * * * * /var/tmp/A11DA8809A7 >/dev/null 2>&1     ####......>/dev/null 2>&1   black hole

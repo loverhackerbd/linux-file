@@ -1,0 +1,16 @@
+awk -F':' '{ print $1}' /etc/passwd
+awk -F':' '{ print $1}' /etc/passwd > listuserforme.txt
+
+history 10
+history | grep cat
+
+*show directory property
+du -sh move/     ......disk usage.
+
+
+# lock Linux account
+passwd -l userName
+# unlock Linux account
+passwd -u userName
+
+sudo userdel -r  imran.ahmad

@@ -1,0 +1,24 @@
+lsblk 
+du -h
+df -Th 
+sudo fdisk -l
+sudo mkdir /media/USB
+chmod -Rf 777 /media/USB
+sudo mount -t vfat /dev/sdb1 /media/USB -o uid=1000
+sudo mount -t ntfs -o nls=utf8,umask=0222 /dev/sdb1 /media/USB
+sudo mount -t ntfs-3g /dev/sdb1 /media/USB
+sudo umount /dev/sdb1
+sudo umount /media/USB
+
+Format with vFat File System
+sudo mkfs.vfat /dev/sdb1
+Format with NTFS File System
+sudo mkfs.ntfs /dev/sdb1
+Format with EXT4 File System
+sudo mkfs.ext4 /dev/sdc1
+
+
+
+
+
+

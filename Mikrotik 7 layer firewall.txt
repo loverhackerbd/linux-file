@@ -1,0 +1,11 @@
+/ip firewall filter add chain=forward action=accept src-address=192.168.88.2 outinterface=ether1
+/ip firewall filter add chain=forward action=drop src-address=192.168.88.0/24 outinterface=ether1
+/ip firewall address-list add list=blocked address=www.facebook.com
+/ip firewall filter add chain=forward action=drop dst-address-list=blocked outinterface=ether1
+
+
+
+/ip firewall layer7-protocol
+add name=Block regexp="^.+(facebook.com).*\$"
+/ip firewall filter
+add action=reject chain=forward layer7-protocol=Block

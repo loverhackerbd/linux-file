@@ -1,0 +1,43 @@
+du -sh /var/log/*
+*****Add user in ubuntu 
+adduser --force-badname qnabedin
+passwd reajul.islam
+****some most use command 
+vi /etc/postfix/transport
+postmap /etc/postfix/transport
+/etc/init.d/postfix restart
+/etc/init.d/dovecot restart
+/etc/init.d/networking restart
+tail -f /var/log/mail.log
+vi /etc/resolv.conf
+postsuper -d ALL
+postsuper -d ALL deferred
+sudo userdel -r kamrul.hasan
+status=deferre
+postconf -n
+postsuper -d ALL
+postsuper -d ALL deferred
+postsuper -d 96CC2B808C2
+sudo userdel -r  anamul.haque
+status=deferre
+tail -f /var/log/syslog | grep postfix    ---postfix error check\\
+
+*root login
+sudo -i
+
+*Group Create
+vim /etc/aliases
+groupname: user1@mail.com, user2@mail.com, ...
+postalias /etc/aliases
+postfix reload
+
+* History save 
+history > history.txt
+history 10
+history | grep cat
+
+*show directory property
+du -sh move/     ***.disk usage.
+
+**empty txt
+echo "" > access.log
