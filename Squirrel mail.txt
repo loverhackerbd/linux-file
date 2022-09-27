@@ -1,0 +1,35 @@
+#apt-get upgrade
+#apt-get update
+
+#apt-get install postfix -y
+#apt-get install dovecot-imapd dovecot-pop3d -y
+#apt-get install squirrelmail -y
+
+
+                                     squiremail config
+
+
+# cd /var/www/
+# cp index.html.backup index.html
+# rm -rf index.html
+# cp /usr/share/squirrelmail/index.php
+/usr/share/squirrelmail/index.php.backup
+# cd /var/www
+# ln -sf /usr/share/squirrelmail/ /var/www/index.html
+
+
+# mv index.html /root/
+
+
+
+vi
+# cd /usr/share/squirrelmail/config
+# ./conf.pl
+
+# vi /etc/hosts
+*172.16.1.191    sattartextile.com       mail
+
+
+
+# /etc/init.d/httpd restart
+# /etc/init.d/apache2 resatrt
